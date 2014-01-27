@@ -15,7 +15,7 @@
 *  qualification listings, this section of source code must not be modified.
 */
 
-#include "ble_bas.h"
+#include "ble_lbs.h"
 #include <string.h>
 #include "nordic_common.h"
 #include "ble_srv_common.h"
@@ -27,79 +27,79 @@
 
 /**@brief Function for handling the Connect event.
  *
- * @param[in]   p_bas       Battery Service structure.
+ * @param[in]   p_lbs       Battery Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_connect(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+static void on_connect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 {
-    p_bas->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
+    p_lbs->conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 }
 
 
 /**@brief Function for handling the Disconnect event.
  *
- * @param[in]   p_bas       Battery Service structure.
+ * @param[in]   p_lbs       Battery Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_disconnect(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+static void on_disconnect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 {
     UNUSED_PARAMETER(p_ble_evt);
-    p_bas->conn_handle = BLE_CONN_HANDLE_INVALID;
+    p_lbs->conn_handle = BLE_CONN_HANDLE_INVALID;
 }
 
 
 /**@brief Function for handling the Write event.
  *
- * @param[in]   p_bas       Battery Service structure.
+ * @param[in]   p_lbs       Battery Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
-static void on_write(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+static void on_write(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 {
-    if (p_bas->is_notification_supported)
+    if (p_lbs->is_notification_supported)
     {
         ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
         
         if (
-            (p_evt_write->handle == p_bas->battery_level_handles.cccd_handle)
+            (p_evt_write->handle == p_lbs->battery_level_handles.cccd_handle)
             &&
             (p_evt_write->len == 2)
         )
         {
             // CCCD written, call application event handler
-            if (p_bas->evt_handler != NULL)
+            if (p_lbs->evt_handler != NULL)
             {
-                ble_bas_evt_t evt;
+                ble_lbs_evt_t evt;
                 
                 if (ble_srv_is_notification_enabled(p_evt_write->data))
                 {
-                    evt.evt_type = BLE_BAS_EVT_NOTIFICATION_ENABLED;
+                    evt.evt_type = BLE_LBS_EVT_NOTIFICATION_ENABLED;
                 }
                 else
                 {
-                    evt.evt_type = BLE_BAS_EVT_NOTIFICATION_DISABLED;
+                    evt.evt_type = BLE_LBS_EVT_NOTIFICATION_DISABLED;
                 }
 
-                p_bas->evt_handler(p_bas, &evt);
+                p_lbs->evt_handler(p_lbs, &evt);
             }
         }
     }
 }
 
 
-void ble_bas_on_ble_evt(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
+void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 {
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
-            on_connect(p_bas, p_ble_evt);
+            on_connect(p_lbs, p_ble_evt);
             break;
             
         case BLE_GAP_EVT_DISCONNECTED:
-            on_disconnect(p_bas, p_ble_evt);
+            on_disconnect(p_lbs, p_ble_evt);
             break;
             
         case BLE_GATTS_EVT_WRITE:
-            on_write(p_bas, p_ble_evt);
+            on_write(p_lbs, p_ble_evt);
             break;
             
         default:
@@ -111,12 +111,12 @@ void ble_bas_on_ble_evt(ble_bas_t * p_bas, ble_evt_t * p_ble_evt)
 
 /**@brief Function for adding the Battery Level characteristic.
  *
- * @param[in]   p_bas        Battery Service structure.
- * @param[in]   p_bas_init   Information needed to initialize the service.
+ * @param[in]   p_lbs        Battery Service structure.
+ * @param[in]   p_lbs_init   Information needed to initialize the service.
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
+static uint32_t battery_level_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
     uint32_t            err_code;
     ble_gatts_char_md_t char_md;
@@ -129,39 +129,39 @@ static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t *
     uint8_t             init_len;
     
     // Add Battery Level characteristic
-    if (p_bas->is_notification_supported)
+    if (p_lbs->is_notification_supported)
     {
         memset(&cccd_md, 0, sizeof(cccd_md));
     
         // According to BAS_SPEC_V10, the read operation on cccd should be possible without
         // authentication.
         BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
-        cccd_md.write_perm = p_bas_init->battery_level_char_attr_md.cccd_write_perm;
+        cccd_md.write_perm = p_lbs_init->battery_level_char_attr_md.cccd_write_perm;
         cccd_md.vloc = BLE_GATTS_VLOC_STACK;
     }
     
     memset(&char_md, 0, sizeof(char_md));
     
     char_md.char_props.read   = 1;
-    char_md.char_props.notify = (p_bas->is_notification_supported) ? 1 : 0;
+    char_md.char_props.notify = (p_lbs->is_notification_supported) ? 1 : 0;
     char_md.p_char_user_desc  = NULL;
     char_md.p_char_pf         = NULL;
     char_md.p_user_desc_md    = NULL;
-    char_md.p_cccd_md         = (p_bas->is_notification_supported) ? &cccd_md : NULL;
+    char_md.p_cccd_md         = (p_lbs->is_notification_supported) ? &cccd_md : NULL;
     char_md.p_sccd_md         = NULL;
     
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BATTERY_LEVEL_CHAR);
     
     memset(&attr_md, 0, sizeof(attr_md));
 
-    attr_md.read_perm  = p_bas_init->battery_level_char_attr_md.read_perm;
-    attr_md.write_perm = p_bas_init->battery_level_char_attr_md.write_perm;
+    attr_md.read_perm  = p_lbs_init->battery_level_char_attr_md.read_perm;
+    attr_md.write_perm = p_lbs_init->battery_level_char_attr_md.write_perm;
     attr_md.vloc       = BLE_GATTS_VLOC_STACK;
     attr_md.rd_auth    = 0;
     attr_md.wr_auth    = 0;
     attr_md.vlen       = 0;
     
-    initial_battery_level = p_bas_init->initial_batt_level;
+    initial_battery_level = p_lbs_init->initial_batt_level;
     
     memset(&attr_char_value, 0, sizeof(attr_char_value));
 
@@ -172,22 +172,22 @@ static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t *
     attr_char_value.max_len      = sizeof(uint8_t);
     attr_char_value.p_value      = &initial_battery_level;
     
-    err_code = sd_ble_gatts_characteristic_add(p_bas->service_handle, &char_md,
+    err_code = sd_ble_gatts_characteristic_add(p_lbs->service_handle, &char_md,
                                                &attr_char_value,
-                                               &p_bas->battery_level_handles);
+                                               &p_lbs->battery_level_handles);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
     
-    if (p_bas_init->p_report_ref != NULL)
+    if (p_lbs_init->p_report_ref != NULL)
     {
         // Add Report Reference descriptor
         BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_REPORT_REF_DESCR);
         
         memset(&attr_md, 0, sizeof(attr_md));
 
-        attr_md.read_perm = p_bas_init->battery_level_report_read_perm;
+        attr_md.read_perm = p_lbs_init->battery_level_report_read_perm;
         BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.write_perm);
 
         attr_md.vloc       = BLE_GATTS_VLOC_STACK;
@@ -195,7 +195,7 @@ static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t *
         attr_md.wr_auth    = 0;
         attr_md.vlen       = 0;
         
-        init_len = ble_srv_report_ref_encode(encoded_report_ref, p_bas_init->p_report_ref);
+        init_len = ble_srv_report_ref_encode(encoded_report_ref, p_lbs_init->p_report_ref);
         
         memset(&attr_char_value, 0, sizeof(attr_char_value));
 
@@ -206,9 +206,9 @@ static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t *
         attr_char_value.max_len      = attr_char_value.init_len;
         attr_char_value.p_value      = encoded_report_ref;
         
-        err_code = sd_ble_gatts_descriptor_add(p_bas->battery_level_handles.value_handle,
+        err_code = sd_ble_gatts_descriptor_add(p_lbs->battery_level_handles.value_handle,
                                                &attr_char_value,
-                                               &p_bas->report_ref_handle);
+                                               &p_lbs->report_ref_handle);
         if (err_code != NRF_SUCCESS)
         {
             return err_code;
@@ -216,51 +216,51 @@ static uint32_t battery_level_char_add(ble_bas_t * p_bas, const ble_bas_init_t *
     }
     else
     {
-        p_bas->report_ref_handle = BLE_GATT_HANDLE_INVALID;
+        p_lbs->report_ref_handle = BLE_GATT_HANDLE_INVALID;
     }
     
     return NRF_SUCCESS;
 }
 
 
-uint32_t ble_bas_init(ble_bas_t * p_bas, const ble_bas_init_t * p_bas_init)
+uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
     uint32_t   err_code;
     ble_uuid_t ble_uuid;
 
     // Initialize service structure
-    p_bas->evt_handler               = p_bas_init->evt_handler;
-    p_bas->conn_handle               = BLE_CONN_HANDLE_INVALID;
-    p_bas->is_notification_supported = p_bas_init->support_notification;
-    p_bas->battery_level_last        = INVALID_BATTERY_LEVEL;
+    p_lbs->evt_handler               = p_lbs_init->evt_handler;
+    p_lbs->conn_handle               = BLE_CONN_HANDLE_INVALID;
+    p_lbs->is_notification_supported = p_lbs_init->support_notification;
+    p_lbs->battery_level_last        = INVALID_BATTERY_LEVEL;
     
     // Add service
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BATTERY_SERVICE);
 
-    err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &ble_uuid, &p_bas->service_handle);
+    err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &ble_uuid, &p_lbs->service_handle);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
     }
     
     // Add battery level characteristic
-    return battery_level_char_add(p_bas, p_bas_init);
+    return battery_level_char_add(p_lbs, p_lbs_init);
 }
 
 
-uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
+uint32_t ble_lbs_battery_level_update(ble_lbs_t * p_lbs, uint8_t battery_level)
 {
     uint32_t err_code = NRF_SUCCESS;
 
-    if (battery_level != p_bas->battery_level_last)
+    if (battery_level != p_lbs->battery_level_last)
     {
         uint16_t len = sizeof(uint8_t);
         
         // Save new battery value
-        p_bas->battery_level_last = battery_level;
+        p_lbs->battery_level_last = battery_level;
         
         // Update database
-        err_code = sd_ble_gatts_value_set(p_bas->battery_level_handles.value_handle,
+        err_code = sd_ble_gatts_value_set(p_lbs->battery_level_handles.value_handle,
                                           0,
                                           &len,
                                           &battery_level);
@@ -270,20 +270,20 @@ uint32_t ble_bas_battery_level_update(ble_bas_t * p_bas, uint8_t battery_level)
         }
         
         // Send value if connected and notifying
-        if ((p_bas->conn_handle != BLE_CONN_HANDLE_INVALID) && p_bas->is_notification_supported)
+        if ((p_lbs->conn_handle != BLE_CONN_HANDLE_INVALID) && p_lbs->is_notification_supported)
         {
             ble_gatts_hvx_params_t hvx_params;
             
             memset(&hvx_params, 0, sizeof(hvx_params));
             len = sizeof(uint8_t);
             
-            hvx_params.handle   = p_bas->battery_level_handles.value_handle;
+            hvx_params.handle   = p_lbs->battery_level_handles.value_handle;
             hvx_params.type     = BLE_GATT_HVX_NOTIFICATION;
             hvx_params.offset   = 0;
             hvx_params.p_len    = &len;
             hvx_params.p_data   = &battery_level;
             
-            err_code = sd_ble_gatts_hvx(p_bas->conn_handle, &hvx_params);
+            err_code = sd_ble_gatts_hvx(p_lbs->conn_handle, &hvx_params);
         }
         else
         {

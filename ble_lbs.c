@@ -169,7 +169,7 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
     
     err_code = sd_ble_gatts_characteristic_add(p_lbs->service_handle, &char_md,
                                                &attr_char_value,
-                                               &p_lbs->battery_level_handles);
+                                               &p_lbs->button_char_handles);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;

@@ -44,19 +44,6 @@
 #include "ble.h"
 #include "ble_srv_common.h"
 
-/**@brief Battery Service event type. */
-typedef enum
-{
-    BLE_LBS_EVT_NOTIFICATION_ENABLED,                             /**< Battery value notification enabled event. */
-    BLE_LBS_EVT_NOTIFICATION_DISABLED                             /**< Battery value notification disabled event. */
-} ble_lbs_evt_type_t;
-
-/**@brief Battery Service event. */
-typedef struct
-{
-    ble_lbs_evt_type_t evt_type;                                  /**< Type of event. */
-} ble_lbs_evt_t;
-
 // Forward declaration of the ble_lbs_t type. 
 typedef struct ble_lbs_s ble_lbs_t;
 

@@ -399,29 +399,18 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 
-            /* YOUR_JOB: Uncomment this part if you are using the app_button module to handle button
-                         events (assuming that the button events are only needed in connected
-                         state). If this is uncommented out here,
-                            1. Make sure that app_button_disable() is called when handling
-                               BLE_GAP_EVT_DISCONNECTED below.
-                            2. Make sure the app_button module is initialized.
             err_code = app_button_enable();
             APP_ERROR_CHECK(err_code);
-            */
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
             nrf_gpio_pin_clear(CONNECTED_LED_PIN_NO);
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
-            /* YOUR_JOB: Uncomment this part if you are using the app_button module to handle button
-                         events. This should be done to save power when not connected
-                         to a peer.
             err_code = app_button_disable();
             APP_ERROR_CHECK(err_code);
-            */
             
-                advertising_start();
+            advertising_start();
             break;
 
         case BLE_GAP_EVT_SEC_PARAMS_REQUEST:

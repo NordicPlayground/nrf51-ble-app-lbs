@@ -53,6 +53,8 @@
 #define ADVERTISING_LED_PIN_NO          LED_0                                       /**< Is on when device is advertising. */
 #define CONNECTED_LED_PIN_NO            LED_1                                       /**< Is on when device has connected. */
 
+#define LEDBUTTON_LED_PIN_NO            LED_0
+
 #define DEVICE_NAME                     "Nordic_Template"                           /**< Name of device. Will be included in the advertising data. */
 
 #define APP_ADV_INTERVAL                64                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
@@ -162,6 +164,7 @@ static void leds_init(void)
 {
     nrf_gpio_cfg_output(ADVERTISING_LED_PIN_NO);
     nrf_gpio_cfg_output(CONNECTED_LED_PIN_NO);
+    nrf_gpio_cfg_output(LEDBUTTON_LED_PIN_NO);
 
     // YOUR_JOB: Add additional LED initialiazations if needed.
 }

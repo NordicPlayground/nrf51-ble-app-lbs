@@ -22,10 +22,6 @@
 #include "app_util.h"
 
 
-#define INVALID_BATTERY_LEVEL  255
-
-#if 0
-
 /**@brief Function for handling the Connect event.
  *
  * @param[in]   p_lbs       Battery Service structure.
@@ -88,7 +84,7 @@ void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
             break;
     }
 }
-#endif
+
 
 /**@brief Function for adding the LED characteristic.
  *

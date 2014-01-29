@@ -56,34 +56,6 @@ static void on_disconnect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
  */
 static void on_write(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 {
-    if (p_lbs->is_notification_supported)
-    {
-        ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
-        
-        if (
-            (p_evt_write->handle == p_lbs->battery_level_handles.cccd_handle)
-            &&
-            (p_evt_write->len == 2)
-        )
-        {
-            // CCCD written, call application event handler
-            if (p_lbs->evt_handler != NULL)
-            {
-                ble_lbs_evt_t evt;
-                
-                if (ble_srv_is_notification_enabled(p_evt_write->data))
-                {
-                    evt.evt_type = BLE_LBS_EVT_NOTIFICATION_ENABLED;
-                }
-                else
-                {
-                    evt.evt_type = BLE_LBS_EVT_NOTIFICATION_DISABLED;
-                }
-
-                p_lbs->evt_handler(p_lbs, &evt);
-            }
-        }
-    }
 }
 
 

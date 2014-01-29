@@ -52,7 +52,6 @@
 
 #define ADVERTISING_LED_PIN_NO          LED_0                                       /**< Is on when device is advertising. */
 #define CONNECTED_LED_PIN_NO            LED_1                                       /**< Is on when device has connected. */
-#define ASSERT_LED_PIN_NO               LED_7                                       /**< Is on when application has asserted. */
 
 #define DEVICE_NAME                     "Nordic_Template"                           /**< Name of device. Will be included in the advertising data. */
 
@@ -108,8 +107,6 @@ void pstorage_sys_event_handler (uint32_t p_evt);
  */
 void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p_file_name)
 {
-    nrf_gpio_pin_set(ASSERT_LED_PIN_NO);
-
     // This call can be used for debug purposes during application development.
     // @note CAUTION: Activating this code will write the stack to flash on an error.
     //                This function should NOT be used in a final product.
@@ -165,7 +162,6 @@ static void leds_init(void)
 {
     nrf_gpio_cfg_output(ADVERTISING_LED_PIN_NO);
     nrf_gpio_cfg_output(CONNECTED_LED_PIN_NO);
-    nrf_gpio_cfg_output(ASSERT_LED_PIN_NO);
 
     // YOUR_JOB: Add additional LED initialiazations if needed.
 }

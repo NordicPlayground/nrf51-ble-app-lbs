@@ -119,7 +119,6 @@ void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
  */
 static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
-    uint32_t            err_code;
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_md_t cccd_md;
     ble_gatts_attr_t    attr_char_value;
@@ -163,14 +162,9 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
     attr_char_value.max_len      = sizeof(uint8_t);
     attr_char_value.p_value      = NULL;
     
-    err_code = sd_ble_gatts_characteristic_add(p_lbs->service_handle, &char_md,
+    return sd_ble_gatts_characteristic_add(p_lbs->service_handle, &char_md,
                                                &attr_char_value,
                                                &p_lbs->button_char_handles);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
-    return NRF_SUCCESS;
 }
 #endif
 

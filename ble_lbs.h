@@ -61,18 +61,13 @@ typedef struct
 typedef struct ble_lbs_s ble_lbs_t;
 
 /**@brief Battery Service event handler type. */
-typedef void (*ble_lbs_evt_handler_t) (ble_lbs_t * p_bas, ble_lbs_evt_t * p_evt);
+typedef void (*ble_lbs_led_write_handler_t) (ble_lbs_t * p_bas, uint8_t new_state);
 
 /**@brief Battery Service init structure. This contains all options and data needed for
  *        initialization of the service.*/
 typedef struct
 {
-    ble_lbs_evt_handler_t         evt_handler;                    /**< Event handler to be called for handling events in the Battery Service. */
-    bool                          support_notification;           /**< TRUE if notification of Battery Level measurement is supported. */
-    ble_srv_report_ref_t *        p_report_ref;                   /**< If not NULL, a Report Reference descriptor with the specified value will be added to the Battery Level characteristic */
-    uint8_t                       initial_batt_level;             /**< Initial battery level */
-    ble_srv_cccd_security_mode_t  battery_level_char_attr_md;     /**< Initial security level for battery characteristics attribute */
-    ble_gap_conn_sec_mode_t       battery_level_report_read_perm; /**< Initial security level for battery report read attribute */
+    ble_lbs_led_write_handler_t led_write_handler;                    /**< Event handler to be called when LED characteristic is written. */
 } ble_lbs_init_t;
 
 /**@brief Battery Service structure. This contains various status information for the service. */

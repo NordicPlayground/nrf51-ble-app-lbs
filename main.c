@@ -45,6 +45,7 @@
 #include "app_button.h"
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
+#include "ble_lbs.h"
 
 #define WAKEUP_BUTTON_PIN               BUTTON_0                                    /**< Button used to wake up the application. */
 // YOUR_JOB: Define any other buttons to be used by the applications:
@@ -89,6 +90,7 @@
 
 static ble_gap_sec_params_t             m_sec_params;                               /**< Security requirements for this application. */
 static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;    /**< Handle of the current connection. */
+static ble_lbs_t                        m_lbs;
 
 // YOUR_JOB: Modify these according to requirements (e.g. if other event types are to pass through
 //           the scheduler).
@@ -255,7 +257,13 @@ static void advertising_init(void)
  */
 static void services_init(void)
 {
-    // YOUR_JOB: Add code to initialize the services used by the application.
+    uint32_t err_code;
+    ble_lbs_init_t init;
+    
+    init.led_write_handler = led_write_handler;
+    
+    err_code = ble_lbs_init(&m_lbs, &init);
+    APP_ERROR_CHECK(err_code);
 }
 
 

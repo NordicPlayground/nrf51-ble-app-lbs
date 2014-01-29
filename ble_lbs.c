@@ -240,6 +240,13 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
     {
         return err_code;
     }
+    
+    err_code = led_char_add(p_lbs, p_lbs_init);
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
+    
     return NRF_SUCCESS;
 }
 

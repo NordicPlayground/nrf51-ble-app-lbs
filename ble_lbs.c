@@ -10,11 +10,6 @@
  *
  */
 
-/* Attention! 
-*  To maintain compliance with Nordic Semiconductor ASA’s Bluetooth profile 
-*  qualification listings, this section of source code must not be modified.
-*/
-
 #include "ble_lbs.h"
 #include <string.h>
 #include "nordic_common.h"
@@ -24,7 +19,7 @@
 
 /**@brief Function for handling the Connect event.
  *
- * @param[in]   p_lbs       Battery Service structure.
+ * @param[in]   p_lbs       LED Button Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
 static void on_connect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
@@ -35,7 +30,7 @@ static void on_connect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling the Disconnect event.
  *
- * @param[in]   p_lbs       Battery Service structure.
+ * @param[in]   p_lbs       LED Button Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
 static void on_disconnect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
@@ -47,7 +42,7 @@ static void on_disconnect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 
 /**@brief Function for handling the Write event.
  *
- * @param[in]   p_lbs       Battery Service structure.
+ * @param[in]   p_lbs       LED Button Service structure.
  * @param[in]   p_ble_evt   Event received from the BLE stack.
  */
 static void on_write(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
@@ -99,7 +94,7 @@ static uint32_t led_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_ini
     memset(&char_md, 0, sizeof(char_md));
     
     char_md.char_props.read   = 1;
-    char_md.char_props.write = 1;
+    char_md.char_props.write  = 1;
     char_md.p_char_user_desc  = NULL;
     char_md.p_char_pf         = NULL;
     char_md.p_user_desc_md    = NULL;

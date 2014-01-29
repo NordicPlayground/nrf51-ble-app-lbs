@@ -10,18 +10,9 @@
  *
  */
 
-/** @file
- *
- * @defgroup ble_sdk_app_template_main main.c
- * @{
- * @ingroup ble_sdk_app_template
- * @brief Template project main file.
- *
- * This file contains a template for creating a new application. It has the code necessary to wakeup
- * from button, advertise, get a connection restart advertising on disconnect and if no new
- * connection created go back to system-off mode.
- * It can easily be used as a starting point for creating a new application, the comments identified
- * with 'YOUR_JOB' indicates where and how you can customize.
+/**
+ * This file is the main file for the application described in application note
+ * nAN-36 Creating Bluetooth® Low Energy Applications Using nRF51822.
  */
 
 #include <stdint.h>

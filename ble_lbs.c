@@ -228,5 +228,14 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 
 uint32_t ble_lbs_on_button_change(ble_lbs_t * p_lbs, uint8_t button_state)
 {
-    return NRF_SUCCESS;
+    ble_gatts_hvx_params_t params;
+    uint16_t len = sizeof(button_state);
+    
+    memset(&params, 0, sizeof(params));
+    params.type = BLE_GATT_HVX_NOTIFICATION;
+    params.handle = p_lbs->button_char_handles.value_handle;
+    params.p_data = &button_state;
+    params.p_len = &len;
+    
+    return sd_ble_gatts_hvx(p_lbs->conn_handle, &params);
 }

@@ -146,7 +146,8 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
     char_md.p_cccd_md         = &cccd_md;
     char_md.p_sccd_md         = NULL;
     
-    BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BATTERY_LEVEL_CHAR);
+    ble_uuid.type = p_lbs->uuid_type;
+    ble_uuid.uuid = LBS_UUID_BUTTON_CHAR;
     
     memset(&attr_md, 0, sizeof(attr_md));
 

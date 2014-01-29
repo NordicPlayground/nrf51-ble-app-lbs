@@ -61,7 +61,7 @@ typedef struct
 typedef struct ble_lbs_s ble_lbs_t;
 
 /**@brief Battery Service event handler type. */
-typedef void (*ble_lbs_led_write_handler_t) (ble_lbs_t * p_bas, uint8_t new_state);
+typedef void (*ble_lbs_led_write_handler_t) (ble_lbs_t * p_lbs, uint8_t new_state);
 
 /**@brief Battery Service init structure. This contains all options and data needed for
  *        initialization of the service.*/
@@ -84,14 +84,14 @@ typedef struct ble_lbs_s
 
 /**@brief Function for initializing the Battery Service.
  *
- * @param[out]  p_bas       Battery Service structure. This structure will have to be supplied by
+ * @param[out]  p_lbs       Battery Service structure. This structure will have to be supplied by
  *                          the application. It will be initialized by this function, and will later
  *                          be used to identify this particular service instance.
- * @param[in]   p_bas_init  Information needed to initialize the service.
+ * @param[in]   p_lbs_init  Information needed to initialize the service.
  *
  * @return      NRF_SUCCESS on successful initialization of service, otherwise an error code.
  */
-uint32_t ble_lbs_init(ble_lbs_t * p_bas, const ble_lbs_init_t * p_bas_init);
+uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init);
 
 /**@brief Function for handling the Application's BLE Stack events.
  *
@@ -102,10 +102,10 @@ uint32_t ble_lbs_init(ble_lbs_t * p_bas, const ble_lbs_init_t * p_bas_init);
  *       battery level has changed while the service has been disconnected from a bonded
  *       client.
  *
- * @param[in]   p_bas      Battery Service structure.
+ * @param[in]   p_lbs      Battery Service structure.
  * @param[in]   p_ble_evt  Event received from the BLE stack.
  */
-void ble_lbs_on_ble_evt(ble_lbs_t * p_bas, ble_evt_t * p_ble_evt);
+void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt);
 
 /**@brief Function for sending a button state notification.
  */

@@ -488,10 +488,7 @@ static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
     on_ble_evt(p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
-    /*
-    YOUR_JOB: Add service ble_evt handlers calls here, like, for example:
-    ble_bas_on_ble_evt(&m_bas, p_ble_evt);
-    */
+    ble_lbs_on_ble_evt(&m_lbs, p_ble_evt);
 }
 
 

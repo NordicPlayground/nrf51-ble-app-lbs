@@ -56,6 +56,14 @@ static void on_disconnect(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
  */
 static void on_write(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
 {
+    ble_gatts_evt_write_t * p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
+    
+    if ((p_evt_write->handle == p_lbs->led_char_handles.value_handle) &&
+        (p_evt_write->len == 1) &&
+        (p_lbs->led_write_handler != NULL))
+    {
+        p_lbs->led_write_handler(p_lbs, p_evt_write->data[0]);
+    }
 }
 
 

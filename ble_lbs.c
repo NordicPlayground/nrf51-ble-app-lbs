@@ -108,14 +108,10 @@ void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
             break;
     }
 }
+#endif
 
-
-/**@brief Function for adding the Battery Level characteristic.
+/**@brief Function for adding the Button characteristic.
  *
- * @param[in]   p_lbs        Battery Service structure.
- * @param[in]   p_lbs_init   Information needed to initialize the service.
- *
- * @return      NRF_SUCCESS on success, otherwise an error code.
  */
 static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
@@ -166,7 +162,6 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
                                                &attr_char_value,
                                                &p_lbs->button_char_handles);
 }
-#endif
 
 uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
@@ -194,6 +189,11 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
         return err_code;
     }
     
+    err_code = button_char_add(p_lbs, p_lbs_init);
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
     return NRF_SUCCESS;
 }
 

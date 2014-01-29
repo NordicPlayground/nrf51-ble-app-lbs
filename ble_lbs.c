@@ -117,7 +117,7 @@ void ble_lbs_on_ble_evt(ble_lbs_t * p_lbs, ble_evt_t * p_ble_evt)
  *
  * @return      NRF_SUCCESS on success, otherwise an error code.
  */
-static uint32_t battery_level_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
+static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
     uint32_t            err_code;
     ble_gatts_char_md_t char_md;
@@ -129,26 +129,23 @@ static uint32_t battery_level_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t *
     uint8_t             encoded_report_ref[BLE_SRV_ENCODED_REPORT_REF_LEN];
     uint8_t             init_len;
     
-    // Add Battery Level characteristic
-    if (p_lbs->is_notification_supported)
-    {
-        memset(&cccd_md, 0, sizeof(cccd_md));
-    
-        // According to BAS_SPEC_V10, the read operation on cccd should be possible without
-        // authentication.
-        BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
-        cccd_md.write_perm = p_lbs_init->battery_level_char_attr_md.cccd_write_perm;
-        cccd_md.vloc = BLE_GATTS_VLOC_STACK;
-    }
+
+    memset(&cccd_md, 0, sizeof(cccd_md));
+
+    // According to BAS_SPEC_V10, the read operation on cccd should be possible without
+    // authentication.
+    BLE_GAP_CONN_SEC_MODE_SET_OPEN(&cccd_md.read_perm);
+    cccd_md.write_perm = p_lbs_init->battery_level_char_attr_md.cccd_write_perm;
+    cccd_md.vloc = BLE_GATTS_VLOC_STACK;
     
     memset(&char_md, 0, sizeof(char_md));
     
     char_md.char_props.read   = 1;
-    char_md.char_props.notify = (p_lbs->is_notification_supported) ? 1 : 0;
+    char_md.char_props.notify = 1;
     char_md.p_char_user_desc  = NULL;
     char_md.p_char_pf         = NULL;
     char_md.p_user_desc_md    = NULL;
-    char_md.p_cccd_md         = (p_lbs->is_notification_supported) ? &cccd_md : NULL;
+    char_md.p_cccd_md         = &cccd_md;
     char_md.p_sccd_md         = NULL;
     
     BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BATTERY_LEVEL_CHAR);

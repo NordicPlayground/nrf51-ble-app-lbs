@@ -229,13 +229,19 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
     ble_uuid_t ble_uuid;
 
     // Initialize service structure
-    p_lbs->evt_handler               = p_lbs_init->evt_handler;
-    p_lbs->conn_handle               = BLE_CONN_HANDLE_INVALID;
-    p_lbs->is_notification_supported = p_lbs_init->support_notification;
-    p_lbs->battery_level_last        = INVALID_BATTERY_LEVEL;
+    p_lbs->conn_handle       = BLE_CONN_HANDLE_INVALID;
+    p_lbs->led_write_handler = p_lbs_init->led_write_handler;
     
     // Add service
-    BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_BATTERY_SERVICE);
+    ble_uuid128_t base_uuid = LBS_UUID_BASE;
+    err_code = sd_ble_uuid_vs_add(&base_uuid, &p_lbs->uuid_type);
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
+    
+    ble_uuid.type = p_lbs->uuid_type;
+    ble_uuid.uuid = LBS_UUID_SERVICE;
 
     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY, &ble_uuid, &p_lbs->service_handle);
     if (err_code != NRF_SUCCESS)

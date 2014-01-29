@@ -1,15 +1,9 @@
-/* Copyright (c) 2012 Nordic Semiconductor. All Rights Reserved.
+/* Copyright (c) 2013 Nordic Semiconductor. All Rights Reserved.
  *
- * The information contained herein is property of Nordic Semiconductor ASA.
- * Terms and conditions of usage are described in detail in NORDIC
- * SEMICONDUCTOR STANDARD SOFTWARE LICENSE AGREEMENT.
- *
- * Licensees are granted free, non-transferable use of the information. NO
- * WARRANTY of ANY KIND is provided. This heading must NOT be removed from
- * the file.
- *
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the license.txt file.
  */
-
+ 
 /**
  * This file is the main file for the application described in application note
  * nAN-36 Creating Bluetooth® Low Energy Applications Using nRF51822.

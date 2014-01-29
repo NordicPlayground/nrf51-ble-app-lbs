@@ -24,6 +24,7 @@
 
 #define INVALID_BATTERY_LEVEL  255
 
+#if 0
 
 /**@brief Function for handling the Connect event.
  *
@@ -221,7 +222,7 @@ static uint32_t battery_level_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t *
     
     return NRF_SUCCESS;
 }
-
+#endif
 
 uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
@@ -249,8 +250,7 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
         return err_code;
     }
     
-    // Add battery level characteristic
-    return battery_level_char_add(p_lbs, p_lbs_init);
+    return NRF_SUCCESS;
 }
 
 uint32_t ble_lbs_on_button_change(ble_lbs_t * p_lbs, uint8_t button_state)

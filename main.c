@@ -39,8 +39,6 @@
 #include "ble_lbs.h"
 
 #define WAKEUP_BUTTON_PIN               BUTTON_0                                    /**< Button used to wake up the application. */
-// YOUR_JOB: Define any other buttons to be used by the applications:
-// #define MY_BUTTON_PIN                   BUTTON_1
 
 #define ADVERTISING_LED_PIN_NO          LED_0                                       /**< Is on when device is advertising. */
 #define CONNECTED_LED_PIN_NO            LED_1                                       /**< Is on when device has connected. */
@@ -53,7 +51,6 @@
 #define APP_ADV_INTERVAL                64                                          /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS      180                                         /**< The advertising timeout (in units of seconds). */
 
-// YOUR_JOB: Modify these according to requirements.
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_MAX_TIMERS            2                                           /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
@@ -84,8 +81,6 @@ static ble_gap_sec_params_t             m_sec_params;                           
 static uint16_t                         m_conn_handle = BLE_CONN_HANDLE_INVALID;    /**< Handle of the current connection. */
 static ble_lbs_t                        m_lbs;
 
-// YOUR_JOB: Modify these according to requirements (e.g. if other event types are to pass through
-//           the scheduler).
 #define SCHED_MAX_EVENT_DATA_SIZE       sizeof(app_timer_event_t)                   /**< Maximum size of scheduler events. Note that scheduler BLE stack events do not contain any data, as the events are being pulled from the stack in the event handler. */
 #define SCHED_QUEUE_SIZE                10                                          /**< Maximum number of events in the scheduler queue. */
 
@@ -134,22 +129,6 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 }
 
 
-/**@brief Function for handling Service errors.
- *
- * @details A pointer to this function will be passed to each service which may need to inform the
- *          application about an error.
- *
- * @param[in]   nrf_error   Error code containing information about what went wrong.
- */
-/*
-// YOUR_JOB: Uncomment this function and make it handle error situations sent back to your
-//           application by the services it uses.
-static void service_error_handler(uint32_t nrf_error)
-{
-    APP_ERROR_HANDLER(nrf_error);
-} */
-
-
 /**@brief Function for the LEDs initialization.
  *
  * @details Initializes all LEDs used by the application.
@@ -159,8 +138,6 @@ static void leds_init(void)
     nrf_gpio_cfg_output(ADVERTISING_LED_PIN_NO);
     nrf_gpio_cfg_output(CONNECTED_LED_PIN_NO);
     nrf_gpio_cfg_output(LEDBUTTON_LED_PIN_NO);
-
-    // YOUR_JOB: Add additional LED initialiazations if needed.
 }
 
 
@@ -172,13 +149,6 @@ static void timers_init(void)
 {
     // Initialize timer module, making it use the scheduler
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_MAX_TIMERS, APP_TIMER_OP_QUEUE_SIZE, true);
-
-    /* YOUR_JOB: Create any timers to be used by the application.
-                 Below is an example of how to create a timer.
-                 For every new timer needed, increase the value of the macro APP_TIMER_MAX_TIMERS by
-                 one.
-    err_code = app_timer_create(&m_app_timer_id, APP_TIMER_MODE_REPEATED, timer_timeout_handler);
-    APP_ERROR_CHECK(err_code); */
 }
 
 
@@ -199,10 +169,6 @@ static void gap_params_init(void)
                                           (const uint8_t *)DEVICE_NAME,
                                           strlen(DEVICE_NAME));
     APP_ERROR_CHECK(err_code);
-
-    /* YOUR_JOB: Use an appearance value matching the application's use case.
-    err_code = sd_ble_gap_appearance_set(BLE_APPEARANCE_);
-    APP_ERROR_CHECK(err_code); */
 
     memset(&gap_conn_params, 0, sizeof(gap_conn_params));
 
@@ -345,11 +311,6 @@ static void conn_params_init(void)
 */
 static void timers_start(void)
 {
-    /* YOUR_JOB: Start your timers. below is an example of how to start a timer.
-    uint32_t err_code;
-
-    err_code = app_timer_start(m_app_timer_id, TIMER_INTERVAL, NULL);
-    APP_ERROR_CHECK(err_code); */
 }
 
 
@@ -562,10 +523,6 @@ static void buttons_init(void)
     };
 
     APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, true);
-
-    // Note: If the only use of buttons is to wake up, the app_button module can be omitted, and
-    //       the wakeup button can be configured by
-    // GPIO_WAKEUP_BUTTON_CONFIG(WAKEUP_BUTTON_PIN);
 }
 
 

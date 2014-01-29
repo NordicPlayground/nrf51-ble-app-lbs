@@ -10,32 +10,6 @@
  *
  */
 
-/** @file
- *
- * @defgroup ble_sdk_srv_bas LED Button Service
- * @{
- * @ingroup ble_sdk_srv
- * @brief LED Button Service module.
- *
- * @details This module implements the LED Button Service with the Battery Level characteristic.
- *          During initialization it adds the LED Button Service and Battery Level characteristic
- *          to the BLE stack database. Optionally it can also add a Report Reference descriptor
- *          to the Battery Level characteristic (used when including the LED Button Service in
- *          the HID service).
- *
- *          If specified, the module will support notification of the Battery Level characteristic
- *          through the ble_lbs_battery_level_update() function.
- *          If an event handler is supplied by the application, the LED Button Service will
- *          generate LED Button Service events to the application.
- *
- * @note The application must propagate BLE stack events to the LED Button Service module by calling
- *       ble_lbs_on_ble_evt() from the from the @ref ble_stack_handler callback.
- *
- * @note Attention! 
- *  To maintain compliance with Nordic Semiconductor ASA Bluetooth profile 
- *  qualification listings, this section of source code must not be modified.
- */
-
 #ifndef BLE_LBS_H__
 #define BLE_LBS_H__
 

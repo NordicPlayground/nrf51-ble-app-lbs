@@ -55,6 +55,7 @@
 #define CONNECTED_LED_PIN_NO            LED_1                                       /**< Is on when device has connected. */
 
 #define LEDBUTTON_LED_PIN_NO            LED_0
+#define LEDBUTTON_BUTTON_PIN_NO         BUTTON_1
 
 #define DEVICE_NAME                     "LedButtonDemo"                           /**< Name of device. Will be included in the advertising data. */
 
@@ -534,23 +535,29 @@ static void scheduler_init(void)
 }
 
 
-/* YOUR_JOB: Uncomment this function if you need to handle button events.
 static void button_event_handler(uint8_t pin_no)
 {
+    static uint8_t send_push = 1;
+    uint32_t err_code;
+    
     switch (pin_no)
     {
-        case MY_BUTTON_PIN:
-            // Code to handle MY_BUTTON keypresses
+        case LEDBUTTON_BUTTON_PIN_NO:
+            err_code = ble_lbs_on_button_change(&m_lbs, send_push);
+            if (err_code != NRF_SUCCESS &&
+                err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
+                err_code != NRF_ERROR_INVALID_STATE)
+            {
+                APP_ERROR_CHECK(err_code);
+            }
+            send_push = !send_push;
             break;
-
-        // Handle any other buttons
 
         default:
             APP_ERROR_HANDLER(pin_no);
             break;
     }
 }
-*/
 
 /**@brief Function for initializing the GPIOTE handler module.
  */
@@ -569,8 +576,7 @@ static void buttons_init(void)
     static app_button_cfg_t buttons[] =
     {
         {WAKEUP_BUTTON_PIN, false, BUTTON_PULL, NULL},
-        // YOUR_JOB: Add other buttons to be used:
-        // {MY_BUTTON_PIN,     false, BUTTON_PULL, button_event_handler}
+        {LEDBUTTON_BUTTON_PIN_NO, false, BUTTON_PULL, button_event_handler}
     };
 
     APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, true);

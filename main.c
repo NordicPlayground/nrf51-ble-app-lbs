@@ -252,6 +252,17 @@ static void advertising_init(void)
     APP_ERROR_CHECK(err_code);
 }
 
+static void led_write_handler(ble_lbs_t * p_lbs, uint8_t led_state)
+{
+    if (led_state)
+    {
+        nrf_gpio_pin_set(LEDBUTTON_LED_PIN_NO);
+    }
+    else
+    {
+        nrf_gpio_pin_clear(LEDBUTTON_LED_PIN_NO);
+    }
+}
 
 /**@brief Function for initializing services that will be used by the application.
  */

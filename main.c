@@ -116,10 +116,10 @@ void app_error_handler(uint32_t error_code, uint32_t line_num, const uint8_t * p
     //                The flash write will happen EVEN if the radio is active, thus interrupting
     //                any communication.
     //                Use with care. Un-comment the line below to use.
-    // ble_debug_assert_handler(error_code, line_num, p_file_name);
+    ble_debug_assert_handler(error_code, line_num, p_file_name);
 
     // On assert, the system can only recover with a reset.
-    NVIC_SystemReset();
+    //NVIC_SystemReset();
 }
 
 

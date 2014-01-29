@@ -125,10 +125,6 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
     ble_gatts_attr_t    attr_char_value;
     ble_uuid_t          ble_uuid;
     ble_gatts_attr_md_t attr_md;
-    uint8_t             initial_battery_level;
-    uint8_t             encoded_report_ref[BLE_SRV_ENCODED_REPORT_REF_LEN];
-    uint8_t             init_len;
-    
 
     memset(&cccd_md, 0, sizeof(cccd_md));
 

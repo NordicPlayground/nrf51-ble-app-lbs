@@ -112,6 +112,9 @@ uint32_t ble_lbs_init(ble_lbs_t * p_bas, const ble_lbs_init_t * p_bas_init);
  */
 void ble_lbs_on_ble_evt(ble_lbs_t * p_bas, ble_evt_t * p_ble_evt);
 
+/**@brief Function for sending a button state notification.
+ */
+uint32_t ble_lbs_on_button_change(ble_lbs_t * p_lbs, uint8_t button_state);
 
 #endif // BLE_LBS_H__
 

@@ -246,3 +246,8 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
     // Add battery level characteristic
     return battery_level_char_add(p_lbs, p_lbs_init);
 }
+
+uint32_t ble_lbs_on_button_change(ble_lbs_t * p_lbs, uint8_t button_state)
+{
+    return NRF_SUCCESS;
+}

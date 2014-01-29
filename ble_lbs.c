@@ -131,7 +131,7 @@ static uint32_t led_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_ini
     char_md.p_sccd_md         = NULL;
     
     ble_uuid.type = p_lbs->uuid_type;
-    ble_uuid.uuid = LBS_UUID_BUTTON_CHAR;
+    ble_uuid.uuid = LBS_UUID_LED_CHAR;
     
     memset(&attr_md, 0, sizeof(attr_md));
 
@@ -153,7 +153,7 @@ static uint32_t led_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_ini
     
     return sd_ble_gatts_characteristic_add(p_lbs->service_handle, &char_md,
                                                &attr_char_value,
-                                               &p_lbs->button_char_handles);
+                                               &p_lbs->led_char_handles);
 }
 
 /**@brief Function for adding the Button characteristic.

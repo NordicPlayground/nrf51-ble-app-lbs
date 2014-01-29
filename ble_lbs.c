@@ -170,46 +170,6 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
     {
         return err_code;
     }
-    
-    if (p_lbs_init->p_report_ref != NULL)
-    {
-        // Add Report Reference descriptor
-        BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_REPORT_REF_DESCR);
-        
-        memset(&attr_md, 0, sizeof(attr_md));
-
-        attr_md.read_perm = p_lbs_init->battery_level_report_read_perm;
-        BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&attr_md.write_perm);
-
-        attr_md.vloc       = BLE_GATTS_VLOC_STACK;
-        attr_md.rd_auth    = 0;
-        attr_md.wr_auth    = 0;
-        attr_md.vlen       = 0;
-        
-        init_len = ble_srv_report_ref_encode(encoded_report_ref, p_lbs_init->p_report_ref);
-        
-        memset(&attr_char_value, 0, sizeof(attr_char_value));
-
-        attr_char_value.p_uuid       = &ble_uuid;
-        attr_char_value.p_attr_md    = &attr_md;
-        attr_char_value.init_len     = init_len;
-        attr_char_value.init_offs    = 0;
-        attr_char_value.max_len      = attr_char_value.init_len;
-        attr_char_value.p_value      = encoded_report_ref;
-        
-        err_code = sd_ble_gatts_descriptor_add(p_lbs->battery_level_handles.value_handle,
-                                               &attr_char_value,
-                                               &p_lbs->report_ref_handle);
-        if (err_code != NRF_SUCCESS)
-        {
-            return err_code;
-        }
-    }
-    else
-    {
-        p_lbs->report_ref_handle = BLE_GATT_HANDLE_INVALID;
-    }
-    
     return NRF_SUCCESS;
 }
 #endif

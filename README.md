@@ -6,11 +6,12 @@ This is the accompanying code for the application note nAN-36: "Creating Bluetoo
 Requirements
 ------------
 - nRF51 SDK version 5.1.0
-- nRF51822 Development Kit version 2.1.0 or later
+- S110 SoftDevice version 6.0.0
+- nRF51822 Evaluation Kit version 2.1.0 or later
 
 The project may need modifications to work with later versions or other boards. 
 
-To compile it, clone the repository in the nrf51822/Board/pca10001/ folder.
+To compile it, clone the repository in the nrf51822/Board/pca10001/s110/ folder.
 
 About this project
 ------------------

@@ -78,6 +78,8 @@ static ble_lbs_t                        m_lbs;
 #define SCHED_MAX_EVENT_DATA_SIZE       sizeof(app_timer_event_t)                   /**< Maximum size of scheduler events. Note that scheduler BLE stack events do not contain any data, as the events are being pulled from the stack in the event handler. */
 #define SCHED_QUEUE_SIZE                10                                          /**< Maximum number of events in the scheduler queue. */
 
+static bool m_is_sending_data = false;
+
 // Persistent storage system event handler
 void pstorage_sys_event_handler (uint32_t p_evt);
 
@@ -122,7 +124,33 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
+static void data_send(void)
+{
+    static uint8_t data[BLE_LBS_DATA_CHAR_LEN] = {0};
 
+    uint32_t err_code;
+    
+    data[0] += 1;
+    
+    for (uint8_t i = 0; i < BLE_LBS_DATA_CHAR_LEN-1; i++)
+    {
+        if (data[i] == 0)
+            ++data[i+1];
+        else 
+            break;
+    }
+                
+    if (m_is_sending_data)
+    {
+        err_code = ble_lbs_data_send(&m_lbs, data);
+        if (err_code != NRF_SUCCESS &&
+            err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
+            err_code != NRF_ERROR_INVALID_STATE)
+        {
+            APP_ERROR_CHECK(err_code);
+        }
+    }
+}
 /**@brief Function for the LEDs initialization.
  *
  * @details Initializes all LEDs used by the application.
@@ -342,6 +370,10 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
     switch (p_ble_evt->header.evt_id)
     {
+        case BLE_EVT_TX_COMPLETE:
+            data_send();
+            break;
+            
         case BLE_GAP_EVT_CONNECTED:
             nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
             nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
@@ -474,20 +506,13 @@ static void scheduler_init(void)
 
 static void button_event_handler(uint8_t pin_no)
 {
-    static uint8_t send_push = 1;
-    uint32_t err_code;
-    
     switch (pin_no)
     {
         case LEDBUTTON_BUTTON_PIN_NO:
-            err_code = ble_lbs_on_button_change(&m_lbs, send_push);
-            if (err_code != NRF_SUCCESS &&
-                err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
-                err_code != NRF_ERROR_INVALID_STATE)
-            {
-                APP_ERROR_CHECK(err_code);
-            }
-            send_push = !send_push;
+            m_is_sending_data = !m_is_sending_data;
+            
+            if (m_is_sending_data)
+                data_send();
             break;
 
         default:

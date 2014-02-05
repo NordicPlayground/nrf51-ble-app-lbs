@@ -126,31 +126,45 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
 
 static void data_send(void)
 {
-    static uint8_t data[BLE_LBS_DATA_CHAR_LEN] = {0};
-
     uint32_t err_code;
-    
-    data[0] += 1;
-    
-    for (uint8_t i = 0; i < BLE_LBS_DATA_CHAR_LEN-1; i++)
+    static uint8_t data[BLE_LBS_DATA_CHAR_LEN] = {0};
+            
+    if (!m_is_sending_data)
     {
-        if (data[i] == 0)
-            ++data[i+1];
-        else 
-            break;
+        return;
     }
-                
-    if (m_is_sending_data)
+    
+    while (1)
     {
         err_code = ble_lbs_data_send(&m_lbs, data);
         if (err_code != NRF_SUCCESS &&
             err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
-            err_code != NRF_ERROR_INVALID_STATE)
+            err_code != NRF_ERROR_INVALID_STATE &&
+            err_code != BLE_ERROR_NO_TX_BUFFERS)
         {
             APP_ERROR_CHECK(err_code);
         }
+
+        // If transmission succeeded, increment payload. 
+        if (err_code == NRF_SUCCESS)
+        {
+            data[0] += 1;
+            for (uint8_t i = 0; i < BLE_LBS_DATA_CHAR_LEN-1; i++)
+            {
+                if (data[i] == 0)
+                    ++data[i+1];
+                else 
+                    break;
+            }
+        }
+        else
+        {
+            break;
+        }
+
     }
 }
+
 /**@brief Function for the LEDs initialization.
  *
  * @details Initializes all LEDs used by the application.

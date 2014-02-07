@@ -1,7 +1,7 @@
 nrf51-ble-app-lbs
 ==================
 
-This is the accompanying code for the application note nAN-36: "Creating Bluetooth Low Energy Applications Using nRF51822". It is an implemtation of a simple application that shows a custom service with two characteristics; one for a button and one for a LED. The button characteristic will send a notification on each toggle of a button, while the LED characteristic can be used to control an on-board LED.
+This is the accompanying code for the application note nAN-36: "Creating Bluetooth Low Energy Applications Using nRF51822", but modified to show data throughput. It was originally an implemtation of a simple application that shows a custom service with two characteristics; one for a button and one for a LED. In this variant, the button characteristic have however been changed to a data characteristic. When BUTTON_1 is pressed, it will start sending 20 byte notifications as fast as possible, until the button is pressed a second time.
 
 Requirements
 ------------

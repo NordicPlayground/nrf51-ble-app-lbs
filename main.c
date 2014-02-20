@@ -358,6 +358,9 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             nrf_gpio_pin_clear(CONNECTED_LED_PIN_NO);
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
+            err_code = ble_bondmngr_bonded_centrals_store();
+            APP_ERROR_CHECK(err_code);
+
             err_code = app_button_disable();
             APP_ERROR_CHECK(err_code);
             

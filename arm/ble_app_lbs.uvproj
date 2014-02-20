@@ -487,11 +487,15 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</FilePath>
             </File>
+            <File>
+              <FileName>ble_bondmngr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_bondmngr.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
     </Target>
-  
     <Target>
       <TargetName>nrf51822_xxab_s110 (128K)</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
@@ -972,6 +976,11 @@
               <FileName>ble_debug_assert_handler.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_bondmngr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ble\ble_bondmngr.c</FilePath>
             </File>
           </Files>
         </Group>

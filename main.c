@@ -429,6 +429,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
  */
 static void ble_evt_dispatch(ble_evt_t * p_ble_evt)
 {
+    ble_bondmngr_on_ble_evt(p_ble_evt);
     on_ble_evt(p_ble_evt);
     ble_conn_params_on_ble_evt(p_ble_evt);
     ble_lbs_on_ble_evt(&m_lbs, p_ble_evt);
@@ -591,6 +592,7 @@ int main(void)
     gpiote_init();
     buttons_init();
     ble_stack_init();
+    bond_manager_init();
     scheduler_init();    
     gap_params_init();
     services_init();

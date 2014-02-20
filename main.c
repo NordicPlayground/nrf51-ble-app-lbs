@@ -31,8 +31,10 @@
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
 #include "ble_lbs.h"
+#include "ble_bondmngr.h"
 
 #define WAKEUP_BUTTON_PIN               BUTTON_0                                    /**< Button used to wake up the application. */
+#define BONDMNGR_DELETE_BUTTON_PIN      WAKEUP_BUTTON_PIN                           /**< Hold this button to delete bonds on startup. */
 
 #define ADVERTISING_LED_PIN_NO          LED_0                                       /**< Is on when device is advertising. */
 #define CONNECTED_LED_PIN_NO            LED_1                                       /**< Is on when device has connected. */
@@ -68,6 +70,9 @@
 #define SEC_PARAM_OOB                   0                                           /**< Out Of Band data not available. */
 #define SEC_PARAM_MIN_KEY_SIZE          7                                           /**< Minimum encryption key size. */
 #define SEC_PARAM_MAX_KEY_SIZE          16                                          /**< Maximum encryption key size. */
+
+#define FLASH_PAGE_SYS_ATTR              (PSTORAGE_FLASH_PAGE_END - 3)              /**< Flash page used for bond manager system attribute information. */
+#define FLASH_PAGE_BOND                  (PSTORAGE_FLASH_PAGE_END - 1)              /**< Flash page used for bond manager bonding information. */
 
 #define DEAD_BEEF                       0xDEADBEEF                                  /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 
@@ -517,6 +522,53 @@ static void buttons_init(void)
     };
 
     APP_BUTTON_INIT(buttons, sizeof(buttons) / sizeof(buttons[0]), BUTTON_DETECTION_DELAY, true);
+}
+
+
+/**@brief Function for handling a Bond Manager error.
+ *
+ * @param[in]   nrf_error   Error code containing information about what went wrong.
+ */
+static void bond_manager_error_handler(uint32_t nrf_error)
+{
+    APP_ERROR_HANDLER(nrf_error);
+}
+
+
+/**@brief Function for handling the Bond Manager events.
+ *
+ * @param[in]   p_evt   Data associated to the bond manager event.
+ */
+static void bond_evt_handler(ble_bondmngr_evt_t * p_evt)
+{
+}
+
+
+/**@brief Function for the Bond Manager initialization.
+ */
+static void bond_manager_init(void)
+{
+    uint32_t            err_code;
+    ble_bondmngr_init_t bond_init_data;
+    bool                bonds_delete;
+
+    // Initialize persistent storage module.
+    err_code = pstorage_init();
+    APP_ERROR_CHECK(err_code);
+
+    // Clear all bonded centrals if the "non-connectable advertisement start" button is pushed.
+    err_code = app_button_is_pushed(BONDMNGR_DELETE_BUTTON_PIN, &bonds_delete);
+    APP_ERROR_CHECK(err_code);
+
+    // Initialize the Bond Manager.
+    bond_init_data.flash_page_num_bond     = FLASH_PAGE_BOND;
+    bond_init_data.flash_page_num_sys_attr = FLASH_PAGE_SYS_ATTR;
+    bond_init_data.evt_handler             = bond_evt_handler;
+    bond_init_data.error_handler           = bond_manager_error_handler;
+    bond_init_data.bonds_delete            = bonds_delete;
+
+    err_code = ble_bondmngr_init(&bond_init_data);
+    APP_ERROR_CHECK(err_code);
 }
 
 

@@ -31,6 +31,7 @@
 #include "ble_debug_assert_handler.h"
 #include "pstorage.h"
 #include "ble_lbs.h"
+#include "nRF6350.h"
 
 #define WAKEUP_BUTTON_PIN               BUTTON_0                                    /**< Button used to wake up the application. */
 
@@ -534,6 +535,8 @@ static void power_manage(void)
 int main(void)
 {
     // Initialize
+    nrf6350_lcd_init();
+    nrf6350_lcd_write_string("Starting", 8, LCD_UPPER_LINE, 0);
     leds_init();
     timers_init();
     gpiote_init();

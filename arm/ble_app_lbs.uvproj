@@ -351,7 +351,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_NRF6310</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
+              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\ext_sensors\</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -416,6 +416,11 @@
               <FileName>twi_hw_master.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\..\twi_hw_master.c</FilePath>
+            </File>
+            <File>
+              <FileName>nRF6350.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ext_sensors\nRF6350\nRF6350.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -842,7 +847,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_NRF6310</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
+              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common;..\..\..\..\..\Include\ext_sensors\</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -907,6 +912,11 @@
               <FileName>twi_hw_master.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\..\twi_hw_master.c</FilePath>
+            </File>
+            <File>
+              <FileName>nRF6350.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\..\Source\ext_sensors\nRF6350\nRF6350.c</FilePath>
             </File>
           </Files>
         </Group>

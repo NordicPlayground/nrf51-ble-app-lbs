@@ -477,20 +477,26 @@ static void scheduler_init(void)
 
 static void button_event_handler(uint8_t pin_no)
 {
-    static uint8_t send_push = 1;
+    uint8_t js_status;
     uint32_t err_code;
+    bool js_success;
     
     switch (pin_no)
     {
         case LEDBUTTON_BUTTON_PIN_NO:
-            err_code = ble_lbs_on_button_change(&m_lbs, send_push);
+            js_success = nrf6350_js_get_status(&js_status);
+            if (!js_success)
+            {
+                APP_ERROR_HANDLER(js_success);
+            }
+            
+            err_code = ble_lbs_on_button_change(&m_lbs, js_status);
             if (err_code != NRF_SUCCESS &&
                 err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
                 err_code != NRF_ERROR_INVALID_STATE)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            send_push = !send_push;
             break;
 
         default:

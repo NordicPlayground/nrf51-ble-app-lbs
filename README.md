@@ -1,7 +1,10 @@
 nrf51-ble-app-lbs
 ==================
 
-This is the accompanying code for the application note nAN-36: "Creating Bluetooth Low Energy Applications Using nRF51822". It is an implemtation of a simple application that shows a custom service with two characteristics; one for a button and one for a LED. The button characteristic will send a notification on each toggle of a button, while the LED characteristic can be used to control an on-board LED. Writing to the LED characteristic will also result in the value being printed on the nRF6350 display.
+This is the accompanying code for the application note nAN-36: "Creating Bluetooth Low Energy Applications Using nRF51822". It is an implemtation of a simple application that shows a custom service with two characteristics; one for a button and one for a LED. The button characteristic will send a notification on each toggle of a button, while the LED characteristic can be used to control an on-board LED. 
+
+Writing to the LED characteristic will also result in the value being printed on the nRF6350 display. This does however not use the PPI, so the application will also try to read the state of the joystick on the nRF6350, when the button is pressed, and then send the JS status instead of the button status. This will trigger a HardFault with the default twi_hw_master.c, so this file has been modified to use the SHORTS available on second revision chips instead.
+
 
 Requirements
 ------------

@@ -412,6 +412,11 @@
               <FileType>1</FileType>
               <FilePath>.\..\main.c</FilePath>
             </File>
+            <File>
+              <FileName>twi_hw_master.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\..\twi_hw_master.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -897,6 +902,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\..\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>twi_hw_master.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\..\twi_hw_master.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -212,10 +212,12 @@ static void led_write_handler(ble_lbs_t * p_lbs, uint8_t led_state)
     if (led_state)
     {
         nrf_gpio_pin_set(LEDBUTTON_LED_PIN_NO);
+        nrf6350_lcd_write_string("LED on", 6, LCD_UPPER_LINE, 0);
     }
     else
     {
         nrf_gpio_pin_clear(LEDBUTTON_LED_PIN_NO);
+        nrf6350_lcd_write_string("LED off", 7, LCD_UPPER_LINE, 0);
     }
 }
 

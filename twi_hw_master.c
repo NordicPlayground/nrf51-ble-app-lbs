@@ -72,6 +72,7 @@ static bool twi_master_write(uint8_t *data, uint8_t data_length, bool issue_stop
         { 
             // Do nothing.
         } 
+        NRF_TWI1->EVENTS_STOPPED = 0;
     }
     return true;
 }

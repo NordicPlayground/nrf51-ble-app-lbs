@@ -474,7 +474,6 @@ static void scheduler_init(void)
 
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
-    static uint8_t send_push = 1;
     uint32_t err_code;
     
     switch (pin_no)
@@ -487,7 +486,6 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
             {
                 APP_ERROR_CHECK(err_code);
             }
-            send_push = !send_push;
             break;
 
         default:

@@ -472,7 +472,7 @@ static void scheduler_init(void)
 }
 
 
-static void button_event_handler(uint8_t pin_no)
+static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
     static uint8_t send_push = 1;
     uint32_t err_code;
@@ -480,7 +480,7 @@ static void button_event_handler(uint8_t pin_no)
     switch (pin_no)
     {
         case LEDBUTTON_BUTTON_PIN_NO:
-            err_code = ble_lbs_on_button_change(&m_lbs, send_push);
+            err_code = ble_lbs_on_button_change(&m_lbs, button_action);
             if (err_code != NRF_SUCCESS &&
                 err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
                 err_code != NRF_ERROR_INVALID_STATE)

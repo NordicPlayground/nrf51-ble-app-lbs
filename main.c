@@ -523,10 +523,14 @@ static void button_event_handler(uint8_t pin_no, uint8_t button_action)
     switch (pin_no)
     {
         case LEDBUTTON_BUTTON_PIN_NO:
-            m_is_sending_data = !m_is_sending_data;
-            
-            if (m_is_sending_data)
-                data_send();
+            if (button_action == APP_BUTTON_PUSH)
+            {
+                m_is_sending_data = !m_is_sending_data;
+                if (m_is_sending_data)
+                {
+                    data_send();
+                }
+            }
             break;
 
         default:

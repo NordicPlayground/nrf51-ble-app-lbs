@@ -49,11 +49,11 @@
 #define APP_TIMER_MAX_TIMERS            2                                           /**< Maximum number of simultaneously created timers. */
 #define APP_TIMER_OP_QUEUE_SIZE         4                                           /**< Size of timer operation queues. */
 
-#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(100, UNIT_1_25_MS)            /**< Minimum acceptable connection interval (0.5 seconds). */
-#define MAX_CONN_INTERVAL               MSEC_TO_UNITS(200, UNIT_1_25_MS)           /**< Maximum acceptable connection interval (1 second). */
+#define MIN_CONN_INTERVAL               MSEC_TO_UNITS(7.5, UNIT_1_25_MS)            /**< Minimum acceptable connection interval (0.5 seconds). */
+#define MAX_CONN_INTERVAL               MSEC_TO_UNITS(40, UNIT_1_25_MS)           /**< Maximum acceptable connection interval (1 second). */
 #define SLAVE_LATENCY                   0                                           /**< Slave latency. */
-#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(4000, UNIT_10_MS)             /**< Connection supervisory timeout (4 seconds). */
-#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(20000, APP_TIMER_PRESCALER) /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (15 seconds). */
+#define CONN_SUP_TIMEOUT                MSEC_TO_UNITS(300, UNIT_10_MS)             /**< Connection supervisory timeout (4 seconds). */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER) /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (15 seconds). */
 #define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(5000, APP_TIMER_PRESCALER)  /**< Time between each call to sd_ble_gap_conn_param_update after the first call (5 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT    3                                           /**< Number of attempts before giving up the connection parameter negotiation. */
 
@@ -77,6 +77,8 @@ static ble_lbs_t                        m_lbs;
 
 #define SCHED_MAX_EVENT_DATA_SIZE       sizeof(app_timer_event_t)                   /**< Maximum size of scheduler events. Note that scheduler BLE stack events do not contain any data, as the events are being pulled from the stack in the event handler. */
 #define SCHED_QUEUE_SIZE                10                                          /**< Maximum number of events in the scheduler queue. */
+
+static bool m_is_sending_data = false;
 
 // Persistent storage system event handler
 void pstorage_sys_event_handler (uint32_t p_evt);
@@ -122,6 +124,46 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
+static void data_send(void)
+{
+    uint32_t err_code;
+    static uint8_t data[BLE_LBS_DATA_CHAR_LEN] = {0};
+            
+    if (!m_is_sending_data)
+    {
+        return;
+    }
+    
+    while (1)
+    {
+        err_code = ble_lbs_data_send(&m_lbs, data);
+        if (err_code != NRF_SUCCESS &&
+            err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
+            err_code != NRF_ERROR_INVALID_STATE &&
+            err_code != BLE_ERROR_NO_TX_BUFFERS)
+        {
+            APP_ERROR_CHECK(err_code);
+        }
+
+        // If transmission succeeded, increment payload. 
+        if (err_code == NRF_SUCCESS)
+        {
+            data[0] += 1;
+            for (uint8_t i = 0; i < BLE_LBS_DATA_CHAR_LEN-1; i++)
+            {
+                if (data[i] == 0)
+                    ++data[i+1];
+                else 
+                    break;
+            }
+        }
+        else
+        {
+            break;
+        }
+
+    }
+}
 
 /**@brief Function for the LEDs initialization.
  *
@@ -342,6 +384,10 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 
     switch (p_ble_evt->header.evt_id)
     {
+        case BLE_EVT_TX_COMPLETE:
+            data_send();
+            break;
+            
         case BLE_GAP_EVT_CONNECTED:
             nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
             nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
@@ -474,17 +520,16 @@ static void scheduler_init(void)
 
 static void button_event_handler(uint8_t pin_no, uint8_t button_action)
 {
-    uint32_t err_code;
-    
     switch (pin_no)
     {
         case LEDBUTTON_BUTTON_PIN_NO:
-            err_code = ble_lbs_on_button_change(&m_lbs, button_action);
-            if (err_code != NRF_SUCCESS &&
-                err_code != BLE_ERROR_INVALID_CONN_HANDLE &&
-                err_code != NRF_ERROR_INVALID_STATE)
+            if (button_action == APP_BUTTON_PUSH)
             {
-                APP_ERROR_CHECK(err_code);
+                m_is_sending_data = !m_is_sending_data;
+                if (m_is_sending_data)
+                {
+                    data_send();
+                }
             }
             break;
 

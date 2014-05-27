@@ -121,10 +121,10 @@ static uint32_t led_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_ini
                                                &p_lbs->led_char_handles);
 }
 
-/**@brief Function for adding the Button characteristic.
+/**@brief Function for adding the data characteristic.
  *
  */
-static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
+static uint32_t data_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
 {
     ble_gatts_char_md_t char_md;
     ble_gatts_attr_md_t cccd_md;
@@ -149,7 +149,7 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
     char_md.p_sccd_md         = NULL;
     
     ble_uuid.type = p_lbs->uuid_type;
-    ble_uuid.uuid = LBS_UUID_BUTTON_CHAR;
+    ble_uuid.uuid = LBS_UUID_DATA_CHAR;
     
     memset(&attr_md, 0, sizeof(attr_md));
 
@@ -164,14 +164,14 @@ static uint32_t button_char_add(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_
 
     attr_char_value.p_uuid       = &ble_uuid;
     attr_char_value.p_attr_md    = &attr_md;
-    attr_char_value.init_len     = sizeof(uint8_t);
+    attr_char_value.init_len     = 20;
     attr_char_value.init_offs    = 0;
-    attr_char_value.max_len      = sizeof(uint8_t);
+    attr_char_value.max_len      = 20;
     attr_char_value.p_value      = NULL;
     
     return sd_ble_gatts_characteristic_add(p_lbs->service_handle, &char_md,
                                                &attr_char_value,
-                                               &p_lbs->button_char_handles);
+                                               &p_lbs->data_char_handles);
 }
 
 uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
@@ -200,7 +200,7 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
         return err_code;
     }
     
-    err_code = button_char_add(p_lbs, p_lbs_init);
+    err_code = data_char_add(p_lbs, p_lbs_init);
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
@@ -215,15 +215,15 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
     return NRF_SUCCESS;
 }
 
-uint32_t ble_lbs_on_button_change(ble_lbs_t * p_lbs, uint8_t button_state)
+uint32_t ble_lbs_data_send(ble_lbs_t * p_lbs, uint8_t data[BLE_LBS_DATA_CHAR_LEN])
 {
     ble_gatts_hvx_params_t params;
-    uint16_t len = sizeof(button_state);
+    uint16_t len = BLE_LBS_DATA_CHAR_LEN;
     
     memset(&params, 0, sizeof(params));
     params.type = BLE_GATT_HVX_NOTIFICATION;
-    params.handle = p_lbs->button_char_handles.value_handle;
-    params.p_data = &button_state;
+    params.handle = p_lbs->data_char_handles.value_handle;
+    params.p_data = data;
     params.p_len = &len;
     
     return sd_ble_gatts_hvx(p_lbs->conn_handle, &params);

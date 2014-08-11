@@ -5,8 +5,8 @@ This is the accompanying code for the application note nAN-36: "Creating Bluetoo
 
 Requirements
 ------------
-- nRF51 SDK version 5.2.0
-- S110 SoftDevice version 6.0.0
+- nRF51 SDK version 6.0
+- S110 SoftDevice version 7.0
 - nRF51822 Evaluation Kit version 2.1.0 or later
 
 The project may need modifications to work with other versions or other boards. 

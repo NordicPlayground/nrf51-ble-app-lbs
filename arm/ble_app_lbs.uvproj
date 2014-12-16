@@ -72,6 +72,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -128,6 +130,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
@@ -139,9 +142,10 @@
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>6</TargetSelection>
+          <TargetSelection>7</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -353,11 +357,13 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_PCA10001</Define>
+              <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_PCA10001 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
-              <IncludePath>..;..\..\..\..\..\Include;..\..\..\..\..\Include\app_common;..\..\..\..\..\Include\ble;..\..\..\..\..\Include\ble\ble_services;..\..\..\..\..\Include\s110;..\..\..\..\..\Include\sd_common</IncludePath>
+              <IncludePath>..\config;..\..\..\..\components\toolchain;..\..\..\..\components\libraries\button;..\..\..\..\components\libraries\scheduler;..\..\..\..\components\softdevice\s110\headers;..\..\..\..\components\ble\common;..\..\..\bsp;..\..\..\..\components\libraries\util;..\..\..\..\components\libraries\timer;..\..\..\..\components\libraries\gpiote;..\..\..\..\components\drivers_nrf\hal;..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\components\ble\ble_debug_assert_handler;..\..\..\..\components\ble\ble_error_log;..\..\..\..\components\drivers_nrf\pstorage;..\;..\..\..\..\components\drivers_nrf\ble_flash</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -369,6 +375,7 @@
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -385,6 +392,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
             <ScatterFile>..\scatter.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
@@ -399,14 +407,14 @@
           <GroupName>Startup Code</GroupName>
           <Files>
             <File>
-              <FileName>arm_startup_nrf51.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\..\..\..\..\..\Source\templates\arm\arm_startup_nrf51.s</FilePath>
-            </File>
-            <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\..\..\..\..\..\Source\templates\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\components\toolchain\system_nrf51.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_startup_nrf51.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\..\components\toolchain\arm\arm_startup_nrf51.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -424,14 +432,14 @@
           <GroupName>Services</GroupName>
           <Files>
             <File>
-              <FileName>ble_srv_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
-            </File>
-            <File>
               <FileName>ble_lbs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\ble_lbs.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_srv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\ble\common\ble_srv_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -441,57 +449,57 @@
             <File>
               <FileName>ble_error_log.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_error_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>pstorage.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\pstorage.c</FilePath>
-            </File>
-            <File>
-              <FileName>crc16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\crc16.c</FilePath>
-            </File>
-            <File>
-              <FileName>ble_advdata.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_advdata.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_scheduler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_scheduler.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ble_conn_params.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_conn_params.c</FilePath>
-            </File>
-            <File>
-              <FileName>softdevice_handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\sd_common\softdevice_handler.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_button.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_gpiote.c</FilePath>
+              <FilePath>..\..\..\..\components\ble\ble_error_log\ble_error_log.c</FilePath>
             </File>
             <File>
               <FileName>ble_debug_assert_handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</FilePath>
+              <FilePath>..\..\..\..\components\ble\ble_debug_assert_handler\ble_debug_assert_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_conn_params.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\ble\common\ble_conn_params.c</FilePath>
+            </File>
+            <File>
+              <FileName>softdevice_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\button\app_button.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_scheduler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_advdata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\ble\common\ble_advdata.c</FilePath>
+            </File>
+            <File>
+              <FileName>crc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\crc16\crc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>pstorage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -563,6 +571,8 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
+            <nStopB1X>0</nStopB1X>
+            <nStopB2X>0</nStopB2X>
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
@@ -619,6 +629,7 @@
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
             <UseTarget>1</UseTarget>
@@ -630,6 +641,7 @@
             <RestoreFunctions>0</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
+            <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
           <TargetSelection>7</TargetSelection>
@@ -844,6 +856,8 @@
             <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
+            <uC99>0</uC99>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
               <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_PCA10001</Define>
@@ -860,6 +874,7 @@
             <SwStkChk>0</SwStkChk>
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
+            <useXO>0</useXO>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -876,6 +891,7 @@
             <useFile>0</useFile>
             <TextAddressRange>0x00000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
+            <pXoBase></pXoBase>
             <ScatterFile>..\scatter.sct</ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
@@ -890,14 +906,14 @@
           <GroupName>Startup Code</GroupName>
           <Files>
             <File>
-              <FileName>arm_startup_nrf51.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\..\..\..\..\..\Source\templates\arm\arm_startup_nrf51.s</FilePath>
-            </File>
-            <File>
               <FileName>system_nrf51.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\..\..\..\..\..\Source\templates\system_nrf51.c</FilePath>
+              <FilePath>..\..\..\..\components\toolchain\system_nrf51.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_startup_nrf51.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>..\..\..\..\components\toolchain\arm\arm_startup_nrf51.s</FilePath>
             </File>
           </Files>
         </Group>
@@ -915,14 +931,14 @@
           <GroupName>Services</GroupName>
           <Files>
             <File>
-              <FileName>ble_srv_common.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</FilePath>
-            </File>
-            <File>
               <FileName>ble_lbs.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\ble_lbs.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_srv_common.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\ble\common\ble_srv_common.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -932,57 +948,57 @@
             <File>
               <FileName>ble_error_log.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_error_log.c</FilePath>
-            </File>
-            <File>
-              <FileName>pstorage.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\pstorage.c</FilePath>
-            </File>
-            <File>
-              <FileName>crc16.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\crc16.c</FilePath>
-            </File>
-            <File>
-              <FileName>ble_advdata.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_advdata.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_scheduler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_scheduler.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>ble_conn_params.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_conn_params.c</FilePath>
-            </File>
-            <File>
-              <FileName>softdevice_handler.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\sd_common\softdevice_handler.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_button.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_button.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_gpiote.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\app_common\app_gpiote.c</FilePath>
+              <FilePath>..\..\..\..\components\ble\ble_error_log\ble_error_log.c</FilePath>
             </File>
             <File>
               <FileName>ble_debug_assert_handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</FilePath>
+              <FilePath>..\..\..\..\components\ble\ble_debug_assert_handler\ble_debug_assert_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_conn_params.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\ble\common\ble_conn_params.c</FilePath>
+            </File>
+            <File>
+              <FileName>softdevice_handler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_button.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\button\app_button.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_scheduler.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ble_advdata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\ble\common\ble_advdata.c</FilePath>
+            </File>
+            <File>
+              <FileName>crc16.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\crc16\crc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>pstorage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_gpiote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -76,16 +76,6 @@
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
       <CpuCode>0</CpuCode>
-      <DllOpt>
-        <SimDllName></SimDllName>
-        <SimDllArguments></SimDllArguments>
-        <SimDlgDllName></SimDlgDllName>
-        <SimDlgDllArguments></SimDlgDllArguments>
-        <TargetDllName>SARMCM3.DLL</TargetDllName>
-        <TargetDllArguments></TargetDllArguments>
-        <TargetDlgDllName>TARMCM1.DLL</TargetDlgDllName>
-        <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
-      </DllOpt>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -104,9 +94,11 @@
         <tRfunc>0</tRfunc>
         <tRbox>1</tRbox>
         <tRtrace>0</tRtrace>
+        <sRSysVw>1</sRSysVw>
+        <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
-        <nTsel>6</nTsel>
+        <nTsel>7</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -143,7 +135,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>JL2CM3</Key>
-          <Name>-U480208452 -O78 -S0 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO15 -FD20000000 -FC800 -FN1 -FF0nrf51xxx.flm -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm)</Name>
+          <Name>-U681666518 -O78 -S0 -A0 -C0 -JU1 -JI127.0.0.1 -JP0 -RST0 -N00("ARM CoreSight SW-DP") -D00(0BB11477) -L00(0) -TO18 -TC10000000 -TP21 -TDS8004 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -TB1 -TFE0 -FO15 -FD20000000 -FC2000 -FN1 -FF0nrf51xxx.flm -FS00 -FL0200000 -FP0($$Device:nRF51822_xxAA$Flash\nrf51xxx.flm)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint>
@@ -266,16 +258,6 @@
         <IsCurrentTarget>0</IsCurrentTarget>
       </OPTFL>
       <CpuCode>0</CpuCode>
-      <DllOpt>
-        <SimDllName></SimDllName>
-        <SimDllArguments></SimDllArguments>
-        <SimDlgDllName></SimDlgDllName>
-        <SimDlgDllArguments></SimDlgDllArguments>
-        <TargetDllName>SARMCM3.DLL</TargetDllName>
-        <TargetDllArguments></TargetDllArguments>
-        <TargetDlgDllName>TARMCM1.DLL</TargetDlgDllName>
-        <TargetDlgDllArguments>-pCM0</TargetDlgDllArguments>
-      </DllOpt>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -294,6 +276,8 @@
         <tRfunc>0</tRfunc>
         <tRbox>1</tRbox>
         <tRtrace>0</tRtrace>
+        <sRSysVw>1</sRSysVw>
+        <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <nTsel>7</nTsel>
@@ -377,32 +361,26 @@
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
-      <FileType>2</FileType>
+      <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\..\..\..\..\..\Source\templates\arm\arm_startup_nrf51.s</PathWithFileName>
-      <FilenameWithoutPath>arm_startup_nrf51.s</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\toolchain\system_nrf51.c</PathWithFileName>
+      <FilenameWithoutPath>system_nrf51.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>2</FileNumber>
-      <FileType>1</FileType>
+      <FileType>2</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\..\..\..\..\..\Source\templates\system_nrf51.c</PathWithFileName>
-      <FilenameWithoutPath>system_nrf51.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\toolchain\arm\arm_startup_nrf51.s</PathWithFileName>
+      <FilenameWithoutPath>arm_startup_nrf51.s</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -420,10 +398,7 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>4</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>438</TopLine>
-      <CurrentLine>469</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\..\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -444,13 +419,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\ble\ble_services\ble_srv_common.c</PathWithFileName>
-      <FilenameWithoutPath>ble_srv_common.c</FilenameWithoutPath>
+      <PathWithFileName>..\ble_lbs.c</PathWithFileName>
+      <FilenameWithoutPath>ble_lbs.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -460,13 +432,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>32</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>180</TopLine>
-      <CurrentLine>195</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\ble_lbs.c</PathWithFileName>
-      <FilenameWithoutPath>ble_lbs.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\ble\common\ble_srv_common.c</PathWithFileName>
+      <FilenameWithoutPath>ble_srv_common.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -484,12 +453,9 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\ble\ble_error_log.c</PathWithFileName>
+      <PathWithFileName>..\..\..\..\components\ble\ble_error_log\ble_error_log.c</PathWithFileName>
       <FilenameWithoutPath>ble_error_log.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -500,13 +466,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\app_common\pstorage.c</PathWithFileName>
-      <FilenameWithoutPath>pstorage.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\ble\ble_debug_assert_handler\ble_debug_assert_handler.c</PathWithFileName>
+      <FilenameWithoutPath>ble_debug_assert_handler.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -516,13 +479,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\app_common\crc16.c</PathWithFileName>
-      <FilenameWithoutPath>crc16.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\ble\common\ble_conn_params.c</PathWithFileName>
+      <FilenameWithoutPath>ble_conn_params.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -532,13 +492,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\ble\ble_advdata.c</PathWithFileName>
-      <FilenameWithoutPath>ble_advdata.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\softdevice\common\softdevice_handler\softdevice_handler.c</PathWithFileName>
+      <FilenameWithoutPath>softdevice_handler.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -548,13 +505,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\app_common\app_scheduler.c</PathWithFileName>
-      <FilenameWithoutPath>app_scheduler.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\libraries\button\app_button.c</PathWithFileName>
+      <FilenameWithoutPath>app_button.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -564,13 +518,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\app_common\app_timer.c</PathWithFileName>
-      <FilenameWithoutPath>app_timer.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\libraries\scheduler\app_scheduler.c</PathWithFileName>
+      <FilenameWithoutPath>app_scheduler.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -580,13 +531,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\ble\ble_conn_params.c</PathWithFileName>
-      <FilenameWithoutPath>ble_conn_params.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\libraries\timer\app_timer.c</PathWithFileName>
+      <FilenameWithoutPath>app_timer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -596,13 +544,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\sd_common\softdevice_handler.c</PathWithFileName>
-      <FilenameWithoutPath>softdevice_handler.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\ble\common\ble_advdata.c</PathWithFileName>
+      <FilenameWithoutPath>ble_advdata.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -612,13 +557,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\app_common\app_button.c</PathWithFileName>
-      <FilenameWithoutPath>app_button.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\libraries\crc16\crc16.c</PathWithFileName>
+      <FilenameWithoutPath>crc16.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -628,13 +570,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>0</TopLine>
-      <CurrentLine>0</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\app_common\app_gpiote.c</PathWithFileName>
-      <FilenameWithoutPath>app_gpiote.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\drivers_nrf\pstorage\pstorage.c</PathWithFileName>
+      <FilenameWithoutPath>pstorage.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -644,13 +583,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>0</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>12</TopLine>
-      <CurrentLine>50</CurrentLine>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\..\..\..\Source\ble\ble_debug_assert_handler.c</PathWithFileName>
-      <FilenameWithoutPath>ble_debug_assert_handler.c</FilenameWithoutPath>
+      <PathWithFileName>..\..\..\..\components\libraries\gpiote\app_gpiote.c</PathWithFileName>
+      <FilenameWithoutPath>app_gpiote.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

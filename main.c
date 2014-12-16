@@ -451,7 +451,7 @@ static void sys_evt_dispatch(uint32_t sys_evt)
 static void ble_stack_init(void)
 {
     uint32_t err_code;
-		static ble_gap_addr_t                   addr;
+    
     // Initialize the SoftDevice handler module.
     SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, false);
 
@@ -461,8 +461,13 @@ static void ble_stack_init(void)
     ble_enable_params.gatts_enable_params.service_changed = IS_SRVC_CHANGED_CHARACT_PRESENT;
     err_code = sd_ble_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
-    sd_ble_gap_address_get(&addr);
-		sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_NONE, &addr);
+
+    ble_gap_addr_t addr;
+    
+    err_code = sd_ble_gap_address_get(&addr);
+    APP_ERROR_CHECK(err_code);
+    sd_ble_gap_address_set(BLE_GAP_ADDR_CYCLE_MODE_NONE, &addr);
+    APP_ERROR_CHECK(err_code);
     // Subscribe for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
     APP_ERROR_CHECK(err_code);

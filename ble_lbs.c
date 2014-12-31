@@ -184,7 +184,7 @@ uint32_t ble_lbs_init(ble_lbs_t * p_lbs, const ble_lbs_init_t * p_lbs_init)
     p_lbs->led_write_handler = p_lbs_init->led_write_handler;
     
     // Add service
-    ble_uuid128_t base_uuid = LBS_UUID_BASE;
+    ble_uuid128_t base_uuid = {LBS_UUID_BASE};
     err_code = sd_ble_uuid_vs_add(&base_uuid, &p_lbs->uuid_type);
     if (err_code != NRF_SUCCESS)
     {

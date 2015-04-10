@@ -145,7 +145,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>7</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -307,8 +307,8 @@
               </OCR_RVCT3>
               <OCR_RVCT4>
                 <Type>1</Type>
-                <StartAddress>0x16000</StartAddress>
-                <Size>0x29000</Size>
+                <StartAddress>0x18000</StartAddress>
+                <Size>0x28000</Size>
               </OCR_RVCT4>
               <OCR_RVCT5>
                 <Type>1</Type>
@@ -361,7 +361,7 @@
             <useXO>0</useXO>
             <VariousControls>
               <MiscControls>--c99</MiscControls>
-              <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_PCA10001 SOFTDEVICE_PRESENT</Define>
+              <Define>NRF51 DEBUG_NRF_USER BLE_STACK_SUPPORT_REQD BOARD_PCA10028 SOFTDEVICE_PRESENT</Define>
               <Undefine></Undefine>
               <IncludePath>..\config;..\..\..\..\components\toolchain;..\..\..\..\components\libraries\button;..\..\..\..\components\libraries\scheduler;..\..\..\..\components\softdevice\s110\headers;..\..\..\..\components\ble\common;..\..\..\bsp;..\..\..\..\components\libraries\util;..\..\..\..\components\libraries\timer;..\..\..\..\components\libraries\gpiote;..\..\..\..\components\drivers_nrf\hal;..\..\..\..\components\softdevice\common\softdevice_handler;..\..\..\..\components\ble\ble_debug_assert_handler;..\..\..\..\components\ble\ble_error_log;..\..\..\..\components\drivers_nrf\pstorage;..\;..\..\..\..\components\drivers_nrf\ble_flash</IncludePath>
             </VariousControls>
@@ -477,11 +477,6 @@
               <FilePath>..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>
             </File>
             <File>
-              <FileName>app_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
-            </File>
-            <File>
               <FileName>ble_advdata.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\components\ble\common\ble_advdata.c</FilePath>
@@ -500,6 +495,16 @@
               <FileName>app_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer_appsh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\timer\app_timer_appsh.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -976,11 +981,6 @@
               <FilePath>..\..\..\..\components\libraries\scheduler\app_scheduler.c</FilePath>
             </File>
             <File>
-              <FileName>app_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
-            </File>
-            <File>
               <FileName>ble_advdata.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\components\ble\common\ble_advdata.c</FilePath>
@@ -999,6 +999,16 @@
               <FileName>app_gpiote.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\..\components\libraries\gpiote\app_gpiote.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\timer\app_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_timer_appsh.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\..\components\libraries\timer\app_timer_appsh.c</FilePath>
             </File>
           </Files>
         </Group>

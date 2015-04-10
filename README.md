@@ -1,13 +1,13 @@
 nrf51-ble-app-lbs
 ==================
-
+(Draft update to v8.0)
 This is the accompanying code for the application note nAN-36: "Creating Bluetooth Low Energy Applications Using nRF51822". It is an implemtation of a simple application that shows a custom service with two characteristics; one for a button and one for a LED. The button characteristic will send a notification with the button state when the button is pressed or released, while the LED characteristic can be used to control an on-board LED.
 
 Requirements
 ------------
-- nRF51 SDK version 7.1
-- S110 SoftDevice version 7.0
-- nRF51822 Evaluation Kit version 2.1.0 or later
+- nRF51 SDK version 8.0
+- S110 SoftDevice version 8.0
+- nRF51822 DK (PCA10028)
 
 The project may need modifications to work with other versions or other boards. 
 

@@ -2,7 +2,9 @@
 !*/_build/*.hex
 arm/*
 !arm/*.uvproj
+!arm/*.uvprojx
 !arm/*.uvopt
+!arm/*.uvoptx
 gcc/*
 !gcc/*.bat
 !gcc/Makefile

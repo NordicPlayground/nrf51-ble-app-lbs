@@ -22,3 +22,13 @@ However, in the hope that it still may be useful also for others than the ones w
 The application is built to be used with the official nRF51 SDK, that can be downloaded from https://www.nordicsemi.no, provided you have a product key for one of our kits.
 
 Please post any questions about this project on https://devzone.nordicsemi.com.
+
+How to get started
+------------------
+- Install [Keil MDK version 5](http://www2.keil.com/mdk5/)
+- Download SDK version 8.0.0 zip(nRF51_SDK_8.0.0_5fc2c3a.zip) from [here](https://developer.nordicsemi.com/nRF51_SDK/nRF51_SDK_v8.x.x/).
+- The zip version of the SDK requires the nRF51 MDK to be installed separately (msi installer is included in the zip)
+- Unzip to C:\Keil_v5\ARM\Device\SDK8.0.0 (SDK8.0.0 folder must be created)
+- Make sure you are on the [SDKv8.0 branch](https://github.com/NordicSemiconductor/nrf51-ble-app-lbs/tree/SDKv8.0) of this github example project, and download the zip file.
+- Unzip it to C:\Keil_v5\ARM\Device\SDK8.0.0\examples\ble_peripheral
+- Open ble_app_lbs.uvprojx in C:\Keil_v5\ARM\Device\SDK8.0.0\examples\ble_peripheral\nrf51-ble-app-lbs-master\arm and compile.
